@@ -108,7 +108,10 @@ Preferred communication style: Simple, everyday language.
 - June 26, 2025: Added advanced alarm features: hour/minute dropdowns, AM/PM selection, 5 sound options, repeat toggle, custom naming
 - June 26, 2025: Implemented alarm alerts with popup notifications and browser notifications
 - June 26, 2025: Added fullscreen mode for all timer components with large display and controls
-- June 26, 2025: Redesigned world clock as clickable city list that opens individual timezone pages
+- June 26, 2025: Redesigned world clock with top countries section displaying live time, followed by other cities list
+- June 26, 2025: Enhanced alarm preview to show full continuous alarm experience (5-second demo) instead of single beep
+- June 26, 2025: Implemented continuous alarm sounds that play until user manually stops them
+- June 26, 2025: Added Google AdSense integration with three ad slots: top leaderboard, middle rectangle, bottom leaderboard
 - June 26, 2025: Enhanced header navigation with more visible blue tabs and better contrast
 - June 26, 2025: Improved footer layout with horizontal arrangement for better mobile responsiveness
 - June 26, 2025: Integrated PostgreSQL database with Drizzle ORM, replacing in-memory storage with persistent database storage

@@ -63,9 +63,21 @@ export default function Home() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Ad Placeholder Top */}
-        <div className="bg-slate-100 border-2 border-dashed border-slate-300 rounded-lg p-8 text-center mb-8">
-          <span className="text-slate-500 text-sm">Advertisement Space - 728x90 Leaderboard</span>
+        {/* Google Ad - Top Leaderboard */}
+        <div className="mb-8">
+          <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
+            <div className="text-xs text-slate-400 mb-2">Advertisement</div>
+            <div id="google-ad-top" className="h-[90px] bg-gradient-to-r from-blue-50 to-indigo-50 rounded flex items-center justify-center">
+              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossOrigin="anonymous"></script>
+              <ins className="adsbygoogle block"
+                   style={{display: 'block'}}
+                   data-ad-client="ca-pub-XXXXXXXXXX"
+                   data-ad-slot="XXXXXXXXXX"
+                   data-ad-format="horizontal"
+                   data-full-width-responsive="true"></ins>
+              <div className="text-slate-400 text-sm">Google Ad - 728x90 Leaderboard</div>
+            </div>
+          </div>
         </div>
 
         {/* Main Timer Section */}
@@ -73,16 +85,38 @@ export default function Home() {
 
 
 
-        {/* Sponsorship Banner Placeholder */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-dashed border-blue-300 rounded-lg p-8 text-center mt-8">
-          <span className="text-blue-600 text-sm font-medium">
-            Sponsorship Banner - Partner with productivity tools like Notion, Asana
-          </span>
+        {/* Google Ad - Middle Banner */}
+        <div className="mt-8">
+          <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
+            <div className="text-xs text-slate-400 mb-2">Advertisement</div>
+            <div id="google-ad-middle" className="h-[250px] bg-gradient-to-r from-green-50 to-emerald-50 rounded flex items-center justify-center">
+              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossOrigin="anonymous"></script>
+              <ins className="adsbygoogle block"
+                   style={{display: 'block'}}
+                   data-ad-client="ca-pub-XXXXXXXXXX"
+                   data-ad-slot="XXXXXXXXXX"
+                   data-ad-format="rectangle"
+                   data-full-width-responsive="true"></ins>
+              <div className="text-slate-400 text-sm">Google Ad - 300x250 Rectangle</div>
+            </div>
+          </div>
         </div>
 
-        {/* Ad Placeholder Bottom */}
-        <div className="bg-slate-100 border-2 border-dashed border-slate-300 rounded-lg p-8 text-center mt-8">
-          <span className="text-slate-500 text-sm">Advertisement Space - 728x90 Leaderboard</span>
+        {/* Google Ad - Bottom Leaderboard */}
+        <div className="mt-8">
+          <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
+            <div className="text-xs text-slate-400 mb-2">Advertisement</div>
+            <div id="google-ad-bottom" className="h-[90px] bg-gradient-to-r from-purple-50 to-pink-50 rounded flex items-center justify-center">
+              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossOrigin="anonymous"></script>
+              <ins className="adsbygoogle block"
+                   style={{display: 'block'}}
+                   data-ad-client="ca-pub-XXXXXXXXXX"
+                   data-ad-slot="XXXXXXXXXX"
+                   data-ad-format="horizontal"
+                   data-full-width-responsive="true"></ins>
+              <div className="text-slate-400 text-sm">Google Ad - 728x90 Leaderboard</div>
+            </div>
+          </div>
         </div>
       </main>
 

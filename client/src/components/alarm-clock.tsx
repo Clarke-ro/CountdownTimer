@@ -34,6 +34,8 @@ export default function AlarmClock() {
   const [showAlarmAlert, setShowAlarmAlert] = useState(false);
   const [triggeredAlarm, setTriggeredAlarm] = useState<Alarm | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [previewAudio, setPreviewAudio] = useState<{ oscillator: OscillatorNode; audioContext: AudioContext } | null>(null);
+  const [alarmAudio, setAlarmAudio] = useState<{ oscillator: OscillatorNode; audioContext: AudioContext; intervalId: NodeJS.Timeout } | null>(null);
   
   // New alarm form state
   const [newAlarm, setNewAlarm] = useState<Omit<Alarm, 'id' | 'active'>>({
@@ -75,7 +77,7 @@ export default function AlarmClock() {
         if (currentHours === alarmHours && currentMinutes === alarmMinutes && currentSeconds === 0) {
           setTriggeredAlarm(alarm);
           setShowAlarmAlert(true);
-          playAlarmSound(alarm.sound);
+          startContinuousAlarm(alarm.sound);
           
           // Show browser notification
           if (Notification.permission === 'granted') {
@@ -96,7 +98,14 @@ export default function AlarmClock() {
     });
   }, [currentTime, alarms]);
 
-  const playAlarmSound = (soundId = newAlarm.sound) => {
+  const playPreviewSound = (soundId = newAlarm.sound) => {
+    // Stop any existing preview
+    if (previewAudio) {
+      previewAudio.oscillator.stop();
+      previewAudio.audioContext.close();
+      setPreviewAudio(null);
+    }
+
     const selectedSoundData = alarmSounds.find(sound => sound.id === soundId);
     if (!selectedSoundData) return;
 
@@ -111,27 +120,17 @@ export default function AlarmClock() {
       oscillator.frequency.setValueAtTime(selectedSoundData.frequency, audioContext.currentTime);
       gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
       
-      // Create a pattern for different sound types
+      // Create a pattern for different sound types (just a preview)
       if (soundId === 'chime') {
         gainNode.gain.exponentialRampToValueAtTime(0.4, audioContext.currentTime + 0.5);
         gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2);
         oscillator.start();
         oscillator.stop(audioContext.currentTime + 2);
       } else if (soundId === 'buzz') {
-        for (let i = 0; i < 3; i++) {
-          setTimeout(() => {
-            const buzzOsc = audioContext.createOscillator();
-            const buzzGain = audioContext.createGain();
-            buzzOsc.connect(buzzGain);
-            buzzGain.connect(audioContext.destination);
-            buzzOsc.frequency.setValueAtTime(selectedSoundData.frequency, audioContext.currentTime);
-            buzzGain.gain.setValueAtTime(0.4, audioContext.currentTime);
-            buzzOsc.start();
-            buzzOsc.stop(audioContext.currentTime + 0.3);
-          }, i * 400);
-        }
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 0.5);
       } else if (soundId === 'bell') {
-        const frequencies = [selectedSoundData.frequency, selectedSoundData.frequency * 1.5, selectedSoundData.frequency * 2];
+        const frequencies = [selectedSoundData.frequency, selectedSoundData.frequency * 1.5];
         frequencies.forEach((freq, index) => {
           const bellOsc = audioContext.createOscillator();
           const bellGain = audioContext.createGain();
@@ -139,21 +138,117 @@ export default function AlarmClock() {
           bellGain.connect(audioContext.destination);
           bellOsc.frequency.setValueAtTime(freq, audioContext.currentTime);
           bellGain.gain.setValueAtTime(0.2 / (index + 1), audioContext.currentTime);
-          bellGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2);
+          bellGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
           bellOsc.start();
-          bellOsc.stop(audioContext.currentTime + 2);
+          bellOsc.stop(audioContext.currentTime + 1);
         });
       } else {
         oscillator.start();
-        oscillator.stop(audioContext.currentTime + 1.5);
+        oscillator.stop(audioContext.currentTime + 1);
       }
+
+      setPreviewAudio({ oscillator, audioContext });
     } catch (error) {
       console.warn('Audio not supported:', error);
     }
   };
 
+  const startContinuousAlarm = (soundId: string) => {
+    // Stop any existing alarm
+    if (alarmAudio) {
+      clearInterval(alarmAudio.intervalId);
+      alarmAudio.oscillator.stop();
+      alarmAudio.audioContext.close();
+    }
+
+    const selectedSoundData = alarmSounds.find(sound => sound.id === soundId);
+    if (!selectedSoundData) return;
+
+    const playSound = () => {
+      try {
+        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.setValueAtTime(selectedSoundData.frequency, audioContext.currentTime);
+        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+        
+        // Create longer patterns for alarm
+        if (soundId === 'chime') {
+          gainNode.gain.exponentialRampToValueAtTime(0.5, audioContext.currentTime + 0.5);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 3);
+          oscillator.start();
+          oscillator.stop(audioContext.currentTime + 3);
+        } else if (soundId === 'buzz') {
+          for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+              const buzzOsc = audioContext.createOscillator();
+              const buzzGain = audioContext.createGain();
+              buzzOsc.connect(buzzGain);
+              buzzGain.connect(audioContext.destination);
+              buzzOsc.frequency.setValueAtTime(selectedSoundData.frequency, audioContext.currentTime);
+              buzzGain.gain.setValueAtTime(0.5, audioContext.currentTime);
+              buzzOsc.start();
+              buzzOsc.stop(audioContext.currentTime + 0.4);
+            }, i * 200);
+          }
+        } else if (soundId === 'bell') {
+          const frequencies = [selectedSoundData.frequency, selectedSoundData.frequency * 1.5, selectedSoundData.frequency * 2];
+          frequencies.forEach((freq, index) => {
+            const bellOsc = audioContext.createOscillator();
+            const bellGain = audioContext.createGain();
+            bellOsc.connect(bellGain);
+            bellGain.connect(audioContext.destination);
+            bellOsc.frequency.setValueAtTime(freq, audioContext.currentTime);
+            bellGain.gain.setValueAtTime(0.3 / (index + 1), audioContext.currentTime);
+            bellGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 3);
+            bellOsc.start();
+            bellOsc.stop(audioContext.currentTime + 3);
+          });
+        } else {
+          oscillator.start();
+          oscillator.stop(audioContext.currentTime + 2);
+        }
+      } catch (error) {
+        console.warn('Audio not supported:', error);
+      }
+    };
+
+    // Play immediately
+    playSound();
+
+    // Set up continuous playing
+    const intervalId = setInterval(playSound, 3000);
+    
+    // Store audio context for cleanup (we'll use a dummy oscillator for reference)
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      setAlarmAudio({ oscillator, audioContext, intervalId });
+    } catch (error) {
+      console.warn('Audio not supported:', error);
+    }
+  };
+
+  const stopAlarm = () => {
+    if (alarmAudio) {
+      clearInterval(alarmAudio.intervalId);
+      try {
+        alarmAudio.audioContext.close();
+      } catch (error) {
+        console.warn('Error stopping alarm:', error);
+      }
+      setAlarmAudio(null);
+    }
+    setShowAlarmAlert(false);
+    setTriggeredAlarm(null);
+  };
+
   const testAlarmSound = () => {
-    playAlarmSound();
+    playPreviewSound();
   };
 
   const requestNotificationPermission = () => {
@@ -342,12 +437,24 @@ export default function AlarmClock() {
                       </SelectContent>
                     </Select>
                     <Button
-                      onClick={testAlarmSound}
+                      onClick={() => {
+                        if (previewAudio) {
+                          previewAudio.oscillator.stop();
+                          previewAudio.audioContext.close();
+                          setPreviewAudio(null);
+                        } else {
+                          startContinuousAlarm(newAlarm.sound);
+                          // Auto stop after 5 seconds for preview
+                          setTimeout(() => {
+                            stopAlarm();
+                          }, 5000);
+                        }
+                      }}
                       variant="outline"
                       size="sm"
                       className="px-3"
                     >
-                      <Volume2 className="h-4 w-4" />
+                      {previewAudio ? <Pause className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
                     </Button>
                   </div>
                 </div>
@@ -456,8 +563,8 @@ export default function AlarmClock() {
                 {alarmSounds.find(s => s.id === triggeredAlarm.sound)?.name}
               </div>
               <Button 
-                onClick={stopAlarmAlert}
-                className="w-full bg-red-600 hover:bg-red-700"
+                onClick={stopAlarm}
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3"
               >
                 Stop Alarm
               </Button>
