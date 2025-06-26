@@ -23,7 +23,7 @@ export default function Stopwatch() {
 
   if (isFullscreen) {
     return (
-      <div className="fixed inset-0 bg-black dark:bg-gray-900 text-white flex flex-col items-center justify-center z-50">
+      <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center z-50">
         <Button
           onClick={() => setIsFullscreen(false)}
           className="absolute top-4 right-4 bg-white/20 hover:bg-white/30"
@@ -79,7 +79,7 @@ export default function Stopwatch() {
       </div>
       
       <div className="text-center">
-        <div className="timer-display text-8xl lg:text-9xl font-bold text-slate-800 dark:text-white mb-8 font-mono">
+        <div className="timer-display text-8xl lg:text-9xl font-bold text-slate-800 mb-8 font-mono">
           {formatTime(time, microseconds)}
         </div>
         

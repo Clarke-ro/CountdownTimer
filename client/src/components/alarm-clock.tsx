@@ -338,9 +338,9 @@ export default function AlarmClock() {
 
   return (
     <>
-      <section className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-slate-200 dark:border-gray-700 p-8">
+      <section className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-slate-800 dark:text-white">Alarm Clock</h2>
+          <h2 className="text-3xl font-bold text-slate-800">Alarm Clock</h2>
           <Button
             onClick={() => setIsFullscreen(true)}
             variant="outline"
@@ -353,10 +353,10 @@ export default function AlarmClock() {
         </div>
         
         <div className="text-center">
-          <div className="timer-display text-6xl lg:text-7xl font-bold text-slate-800 dark:text-white mb-4">
+          <div className="timer-display text-6xl lg:text-7xl font-bold text-slate-800 mb-4">
             {formatCurrentTime()}
           </div>
-          <div className="text-lg text-slate-600 dark:text-gray-300 mb-8">
+          <div className="text-lg text-slate-600 mb-8">
             {currentTime.toLocaleDateString('en-US', { 
               weekday: 'long', 
               year: 'numeric', 

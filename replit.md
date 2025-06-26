@@ -34,18 +34,18 @@ This is a modern, single-page online timer application built with React and Expr
 - **World Clock**: Display time across 12 major international time zones
 
 ### UI Components
-- Responsive design using Tailwind CSS breakpoints with complete dark/light theme support
-- shadcn/ui component library for consistent styling with ThemeProvider integration
+- Responsive design using Tailwind CSS breakpoints
+- shadcn/ui component library for consistent styling
 - Mobile-first approach with touch-friendly controls
 - Clean, modern interface with proper contrast and typography
-- Theme toggle button for seamless dark/light mode switching
+- Sea blue gradient styled app name for branding
 
 ### Technical Features
 - **Audio Notifications**: Advanced Web Audio API with 10 diverse alarm sounds including nature, zen, and musical patterns
 - **Real-time Updates**: High-precision timing using performance.now() and requestAnimationFrame for microsecond accuracy
+- **Background Execution**: Timers continue running when users switch tabs using Date.now() for accurate elapsed time tracking
 - **Browser Compatibility**: Modern browser features with graceful fallbacks
-- **Performance**: Optimized React components with proper cleanup and theme state management
-- **Theme System**: Complete dark/light mode support with localStorage persistence
+- **Performance**: Optimized React components with proper cleanup
 
 ## Data Flow
 
@@ -118,10 +118,10 @@ Preferred communication style: Simple, everyday language.
 - June 26, 2025: Improved footer layout with horizontal arrangement for better mobile responsiveness
 - June 26, 2025: Integrated PostgreSQL database with Drizzle ORM, replacing in-memory storage with persistent database storage
 - June 26, 2025: **MAJOR ENHANCEMENT** - Expanded alarm sounds library from 5 to 10 diverse options including nature sounds, zen bowl, rooster call, ocean waves, and piano melody
-- June 26, 2025: **THEME SYSTEM** - Implemented complete dark/light theme support with ThemeProvider and ThemeToggle components
 - June 26, 2025: **STOPWATCH PRECISION** - Added microsecond precision to stopwatch using performance.now() and requestAnimationFrame
 - June 26, 2025: **ALARM PREVIEW DIALOG** - Created immersive 5-second alarm preview with visual countdown and proper sound patterns
 - June 26, 2025: **GOOGLE ADSENSE COMPLETE** - Added AdSense account meta tag and properly configured ads.txt file serving
+- June 26, 2025: **UI IMPROVEMENTS** - Removed dark mode, enhanced world clock with large time displays, styled app name with sea blue gradient, ensured timers continue in background tabs
 
 ## Changelog
 

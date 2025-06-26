@@ -126,30 +126,24 @@ export default function WorldClock() {
       {/* Top Countries Section */}
       <div className="mb-8">
         <h3 className="text-xl font-semibold text-slate-700 mb-4">Top Countries</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           {topCities.map((city) => {
             const clockData = topClocks[city.timezone];
             return (
               <Card
                 key={city.timezone}
-                className="p-4 hover:bg-slate-50 cursor-pointer transition-colors border-2 hover:border-blue-300"
+                className="p-6 hover:bg-slate-50 cursor-pointer transition-colors border-2 hover:border-blue-300"
                 onClick={() => setSelectedCity(city)}
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="text-2xl">{city.flag}</div>
-                    <div className="text-left">
-                      <div className="font-semibold text-slate-800">{city.name}</div>
-                      <div className="text-sm text-slate-600">{city.country}</div>
-                    </div>
+                <div className="text-center">
+                  <div className="text-3xl mb-2">{city.flag}</div>
+                  <div className="font-semibold text-slate-800 mb-1">{city.name}</div>
+                  <div className="text-sm text-slate-600 mb-3">{city.country}</div>
+                  <div className="font-mono text-3xl font-bold text-blue-600 mb-1">
+                    {clockData?.time || "00:00:00"}
                   </div>
-                  <div className="text-right">
-                    <div className="font-mono text-lg font-bold text-slate-800">
-                      {clockData?.time || "00:00:00"}
-                    </div>
-                    <div className="text-xs text-slate-500">
-                      {clockData?.date?.split(',')[0] || "Loading..."}
-                    </div>
+                  <div className="text-sm text-slate-500">
+                    {clockData?.date?.split(',')[0] || "Loading..."}
                   </div>
                 </div>
               </Card>

@@ -9,10 +9,16 @@ export function useTimer(type: TimerType) {
 
   useEffect(() => {
     if (isRunning) {
+      const startTime = Date.now();
+      const initialTime = time;
+      
       intervalRef.current = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
         setTime(prevTime => {
+          let newTime;
           if (type === 'countdown') {
-            if (prevTime <= 1) {
+            newTime = Math.max(0, initialTime - elapsed);
+            if (newTime <= 0 && prevTime > 0) {
               setIsRunning(false);
               // Timer finished
               try {
@@ -35,12 +41,12 @@ export function useTimer(type: TimerType) {
               alert('Countdown finished!');
               return 0;
             }
-            return prevTime - 1;
+            return newTime;
           } else {
-            return prevTime + 1;
+            return initialTime + elapsed;
           }
         });
-      }, 1000);
+      }, 100); // Update more frequently for smoother display
     } else {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
