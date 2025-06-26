@@ -1,10 +1,16 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import path from "path";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Serve ads.txt from client/public directory
+app.get('/ads.txt', (req, res) => {
+  res.sendFile(path.join('/home/runner/workspace/client/public/ads.txt'));
+});
 
 app.use((req, res, next) => {
   const start = Date.now();
