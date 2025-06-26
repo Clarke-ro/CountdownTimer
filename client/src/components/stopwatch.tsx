@@ -22,7 +22,7 @@ export default function Stopwatch() {
       <h2 className="text-3xl font-bold text-center mb-8 text-slate-800">Stopwatch</h2>
       
       <div className="text-center">
-        <div className="timer-display text-6xl font-bold text-slate-800 mb-8">
+        <div className="timer-display text-8xl lg:text-9xl font-bold text-slate-800 mb-8">
           {formatTime(time)}
         </div>
         

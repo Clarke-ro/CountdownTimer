@@ -101,7 +101,16 @@ This is a modern, single-page online timer application built with React and Expr
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes
+
+- June 26, 2025: Enhanced timer display with larger font sizes (8xl-9xl) for better visibility
+- June 26, 2025: Improved alarm functionality with 5 different sound options (Classic Beep, Gentle Chime, Buzz Alert, Bell Ring, Digital Alert)
+- June 26, 2025: Added sound testing capability and browser notification support for alarms
+- June 26, 2025: Enhanced header navigation with more visible blue tabs and better contrast
+- June 26, 2025: Added interactive world clock section with 20 major cities and clickable city selection
+- June 26, 2025: Improved footer layout with horizontal arrangement for better mobile responsiveness
+
 ## Changelog
 
 Changelog:
-- June 26, 2025. Initial setup
+- June 26, 2025. Initial setup and feature enhancements

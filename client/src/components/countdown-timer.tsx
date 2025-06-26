@@ -50,7 +50,7 @@ export default function CountdownTimer() {
           />
         </div>
         
-        <div className="timer-display text-6xl font-bold text-slate-800 mb-8">
+        <div className="timer-display text-8xl lg:text-9xl font-bold text-slate-800 mb-8">
           {formatTime(time)}
         </div>
         
