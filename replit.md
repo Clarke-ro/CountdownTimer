@@ -16,14 +16,14 @@ This is a modern, single-page online timer application built with React and Expr
 ### Backend Architecture
 - **Runtime**: Node.js with Express.js
 - **Language**: TypeScript with ES modules
-- **Database**: PostgreSQL with Drizzle ORM (configured but using in-memory storage currently)
+- **Database**: PostgreSQL with Drizzle ORM (active database integration)
 - **Session Management**: connect-pg-simple for PostgreSQL session storage
 - **Development**: Hot module replacement via Vite integration
 
 ### Database Schema
 - Simple user table with id, username, and password fields
 - Uses Drizzle ORM with Zod validation schemas
-- Currently implemented with in-memory storage, ready for PostgreSQL migration
+- PostgreSQL database actively connected and configured
 
 ## Key Components
 
@@ -109,6 +109,7 @@ Preferred communication style: Simple, everyday language.
 - June 26, 2025: Enhanced header navigation with more visible blue tabs and better contrast
 - June 26, 2025: Added interactive world clock section with 20 major cities and clickable city selection
 - June 26, 2025: Improved footer layout with horizontal arrangement for better mobile responsiveness
+- June 26, 2025: Integrated PostgreSQL database with Drizzle ORM, replacing in-memory storage with persistent database storage
 
 ## Changelog
 
