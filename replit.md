@@ -104,10 +104,12 @@ Preferred communication style: Simple, everyday language.
 ## Recent Changes
 
 - June 26, 2025: Enhanced timer display with larger font sizes (8xl-9xl) for better visibility
-- June 26, 2025: Improved alarm functionality with 5 different sound options (Classic Beep, Gentle Chime, Buzz Alert, Bell Ring, Digital Alert)
-- June 26, 2025: Added sound testing capability and browser notification support for alarms
+- June 26, 2025: Completely redesigned alarm functionality with popup dialog interface for setting alarms
+- June 26, 2025: Added advanced alarm features: hour/minute dropdowns, AM/PM selection, 5 sound options, repeat toggle, custom naming
+- June 26, 2025: Implemented alarm alerts with popup notifications and browser notifications
+- June 26, 2025: Added fullscreen mode for all timer components with large display and controls
+- June 26, 2025: Redesigned world clock as clickable city list that opens individual timezone pages
 - June 26, 2025: Enhanced header navigation with more visible blue tabs and better contrast
-- June 26, 2025: Added interactive world clock section with 20 major cities and clickable city selection
 - June 26, 2025: Improved footer layout with horizontal arrangement for better mobile responsiveness
 - June 26, 2025: Integrated PostgreSQL database with Drizzle ORM, replacing in-memory storage with persistent database storage
 
