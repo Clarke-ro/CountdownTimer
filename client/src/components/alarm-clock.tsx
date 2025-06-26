@@ -4,16 +4,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { AlarmPreviewDialog } from "@/components/alarm-preview-dialog";
 import { Switch } from "@/components/ui/switch";
 import { Card } from "@/components/ui/card";
 import { X, Volume2, Play, Pause, Maximize, Minimize } from "lucide-react";
 
 const alarmSounds = [
-  { id: 'beep', name: 'Classic Beep', frequency: 800 },
-  { id: 'chime', name: 'Gentle Chime', frequency: 523 },
-  { id: 'buzz', name: 'Buzz Alert', frequency: 200 },
-  { id: 'bell', name: 'Bell Ring', frequency: 659 },
-  { id: 'digital', name: 'Digital Alert', frequency: 1000 },
+  { id: 'beep', name: 'Classic Beep', frequency: 800, pattern: 'single' },
+  { id: 'chime', name: 'Gentle Chime', frequency: 523, pattern: 'melody' },
+  { id: 'buzz', name: 'Buzz Alert', frequency: 200, pattern: 'rapid' },
+  { id: 'bell', name: 'Bell Ring', frequency: 659, pattern: 'bell' },
+  { id: 'digital', name: 'Digital Alert', frequency: 1000, pattern: 'digital' },
+  { id: 'nature', name: 'Nature Birds', frequency: 440, pattern: 'nature' },
+  { id: 'zen', name: 'Zen Bowl', frequency: 432, pattern: 'zen' },
+  { id: 'rooster', name: 'Rooster Call', frequency: 350, pattern: 'rooster' },
+  { id: 'ocean', name: 'Ocean Waves', frequency: 220, pattern: 'ocean' },
+  { id: 'piano', name: 'Piano Melody', frequency: 261, pattern: 'piano' },
 ];
 
 interface Alarm {
@@ -36,6 +42,7 @@ export default function AlarmClock() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [previewAudio, setPreviewAudio] = useState<{ oscillator: OscillatorNode; audioContext: AudioContext } | null>(null);
   const [alarmAudio, setAlarmAudio] = useState<{ oscillator: OscillatorNode; audioContext: AudioContext; intervalId: NodeJS.Timeout } | null>(null);
+  const [showPreviewDialog, setShowPreviewDialog] = useState(false);
   
   // New alarm form state
   const [newAlarm, setNewAlarm] = useState<Omit<Alarm, 'id' | 'active'>>({
@@ -331,9 +338,9 @@ export default function AlarmClock() {
 
   return (
     <>
-      <section className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+      <section className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-slate-200 dark:border-gray-700 p-8">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-slate-800">Alarm Clock</h2>
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-white">Alarm Clock</h2>
           <Button
             onClick={() => setIsFullscreen(true)}
             variant="outline"
@@ -346,10 +353,10 @@ export default function AlarmClock() {
         </div>
         
         <div className="text-center">
-          <div className="timer-display text-6xl lg:text-7xl font-bold text-slate-800 mb-4">
+          <div className="timer-display text-6xl lg:text-7xl font-bold text-slate-800 dark:text-white mb-4">
             {formatCurrentTime()}
           </div>
-          <div className="text-lg text-slate-600 mb-8">
+          <div className="text-lg text-slate-600 dark:text-gray-300 mb-8">
             {currentTime.toLocaleDateString('en-US', { 
               weekday: 'long', 
               year: 'numeric', 
@@ -437,24 +444,12 @@ export default function AlarmClock() {
                       </SelectContent>
                     </Select>
                     <Button
-                      onClick={() => {
-                        if (previewAudio) {
-                          previewAudio.oscillator.stop();
-                          previewAudio.audioContext.close();
-                          setPreviewAudio(null);
-                        } else {
-                          startContinuousAlarm(newAlarm.sound);
-                          // Auto stop after 5 seconds for preview
-                          setTimeout(() => {
-                            stopAlarm();
-                          }, 5000);
-                        }
-                      }}
+                      onClick={() => setShowPreviewDialog(true)}
                       variant="outline"
                       size="sm"
                       className="px-3"
                     >
-                      {previewAudio ? <Pause className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                      <Volume2 className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
@@ -572,6 +567,15 @@ export default function AlarmClock() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Preview Dialog */}
+      <AlarmPreviewDialog
+        open={showPreviewDialog}
+        onOpenChange={setShowPreviewDialog}
+        soundName={alarmSounds.find(s => s.id === newAlarm.sound)?.name || 'Unknown'}
+        frequency={alarmSounds.find(s => s.id === newAlarm.sound)?.frequency || 440}
+        pattern={alarmSounds.find(s => s.id === newAlarm.sound)?.pattern || 'single'}
+      />
     </>
   );
 }

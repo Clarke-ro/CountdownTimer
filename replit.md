@@ -29,21 +29,23 @@ This is a modern, single-page online timer application built with React and Expr
 
 ### Timer Functionality
 - **Countdown Timer**: User-configurable minutes with MM:SS display, audio notification
-- **Stopwatch**: Precision timing with HH:MM:SS format, start/pause/reset controls
-- **Alarm Clock**: Set specific time alarms with browser notification and audio alerts
+- **Stopwatch**: High-precision timing with HH:MM:SS.MS format (microseconds), start/pause/reset controls using requestAnimationFrame
+- **Alarm Clock**: Set specific time alarms with 10 diverse sound options, immersive preview dialog, browser notifications
 - **World Clock**: Display time across 12 major international time zones
 
 ### UI Components
-- Responsive design using Tailwind CSS breakpoints
-- shadcn/ui component library for consistent styling
+- Responsive design using Tailwind CSS breakpoints with complete dark/light theme support
+- shadcn/ui component library for consistent styling with ThemeProvider integration
 - Mobile-first approach with touch-friendly controls
 - Clean, modern interface with proper contrast and typography
+- Theme toggle button for seamless dark/light mode switching
 
 ### Technical Features
-- **Audio Notifications**: Web Audio API for timer completion sounds
-- **Real-time Updates**: 1-second intervals for accurate time display
+- **Audio Notifications**: Advanced Web Audio API with 10 diverse alarm sounds including nature, zen, and musical patterns
+- **Real-time Updates**: High-precision timing using performance.now() and requestAnimationFrame for microsecond accuracy
 - **Browser Compatibility**: Modern browser features with graceful fallbacks
-- **Performance**: Optimized React components with proper cleanup
+- **Performance**: Optimized React components with proper cleanup and theme state management
+- **Theme System**: Complete dark/light mode support with localStorage persistence
 
 ## Data Flow
 
@@ -115,6 +117,11 @@ Preferred communication style: Simple, everyday language.
 - June 26, 2025: Enhanced header navigation with more visible blue tabs and better contrast
 - June 26, 2025: Improved footer layout with horizontal arrangement for better mobile responsiveness
 - June 26, 2025: Integrated PostgreSQL database with Drizzle ORM, replacing in-memory storage with persistent database storage
+- June 26, 2025: **MAJOR ENHANCEMENT** - Expanded alarm sounds library from 5 to 10 diverse options including nature sounds, zen bowl, rooster call, ocean waves, and piano melody
+- June 26, 2025: **THEME SYSTEM** - Implemented complete dark/light theme support with ThemeProvider and ThemeToggle components
+- June 26, 2025: **STOPWATCH PRECISION** - Added microsecond precision to stopwatch using performance.now() and requestAnimationFrame
+- June 26, 2025: **ALARM PREVIEW DIALOG** - Created immersive 5-second alarm preview with visual countdown and proper sound patterns
+- June 26, 2025: **GOOGLE ADSENSE COMPLETE** - Added AdSense account meta tag and properly configured ads.txt file serving
 
 ## Changelog
 
